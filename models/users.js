@@ -28,20 +28,22 @@ userModel.getUser = async (id, callback) => {
   }
 }
 
-userModel.updateUser = (userData, callback) => {
+userModel.updateUser = async (userData, callback) => {
   if (connection) {
     let sql = `
-        UPDATE users SET
-        username = ${connection.escape(userData.username)},
-        password = ${connection.escape(userData.password)},
+        UPDATE usuarios SET
+        nombres = ${connection.escape(userData.nombres)},
+        apellidos = ${connection.escape(userData.apellidos)},
+        contraseña = ${connection.escape(userData.contraseña)},
+        rol = ${connection.escape(userData.rol)},
         email = ${connection.escape(userData.email)}
-        where id = ${connection.escape(userData.id)}`
+        where idUsuarios = ${connection.escape(userData.id) || connection.escape(userData.codigo)}`
 
-    connection.query(sql, (err, rows) => {
+    await connection.query(sql, (err, rows) => {
       if (err) {
         throw err
       } else {
-        callback(null, {'message': 'User updated'})
+        callback(null, {'message': 'Usuario actualizado'})
       }
     })
   }

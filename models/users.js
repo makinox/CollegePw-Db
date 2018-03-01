@@ -37,13 +37,28 @@ userModel.updateUser = async (userData, callback) => {
         contraseña = ${connection.escape(userData.contraseña)},
         rol = ${connection.escape(userData.rol)},
         email = ${connection.escape(userData.email)}
-        where idUsuarios = ${connection.escape(userData.id) || connection.escape(userData.codigo)}`
+        where idUsuarios = ${connection.escape(userData.idUsuarios) || connection.escape(userData.codigo)}`
 
     await connection.query(sql, (err, rows) => {
       if (err) {
         throw err
       } else {
         callback(null, {'message': 'Usuario actualizado'})
+      }
+    })
+  }
+}
+
+userModel.insertUser = async (userData, callback) => {
+  if (connection) {
+    await connection.query('INSERT INTO usuarios SET ?', userData, (err, rows) => {
+      if (err) {
+        console.log(err)
+        throw err
+      } else {
+        callback(null, {
+          'insertId': rows.insertId
+        })
       }
     })
   }

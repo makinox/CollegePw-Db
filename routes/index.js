@@ -24,12 +24,12 @@ module.exports = function (app) {
   // Modificar un usuario
   app.put('/users/:id', (req, res) => {
     const userData = {
-      nombres: req.params.nombres,
+      idUsuarios: req.params.id,
+      nombres: req.body.nombres,
       apellidos: req.body.apellidos,
       contraseña: req.body.contraseña,
       email: req.body.email,
       rol: req.body.rol,
-      idUsuarios: req.body.idUsuarios,
       codigo: req.body.codigo,
       created_at: null,
       updated_at: null
@@ -51,4 +51,31 @@ module.exports = function (app) {
       }
     })
   })
+  // Insertando usuario
+  app.post('/users', (req, res) => {
+  const userData = {
+    idUsuarios: req.params.id,
+    nombres: req.body.nombres,
+    apellidos: req.body.apellidos,
+    contraseña: req.body.contraseña,
+    email: req.body.email,
+    rol: req.body.rol,
+    codigo: req.body.codigo,
+  }
+  User.insertUser(userData, (err, data) => {
+    if (data && data.insertId) {
+      console.log(data)
+      res.json({
+        success: true,
+        msg: 'Usuario insertado',
+        data: data
+      })
+    } else if (err) {
+      res.status(500).json({
+        success: false,
+        message: `Error ${err}`
+      })
+    }
+  })
+})
 }

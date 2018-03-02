@@ -40,7 +40,7 @@ module.exports = function (app) {
       } else if (err) {
         res.json({
           success: false,
-          message: `Error ${err}`
+          message: `Ha ocurrido un error con el servidor: ${err}`
         })
       } else {
         res.json({
@@ -73,7 +73,7 @@ module.exports = function (app) {
       } else if (err) {
         res.status(500).json({
           success: false,
-          message: `Error ${err}`
+          message: `Ha ocurrido un error con el servidor: ${err}`
         })
       }
     })
@@ -81,14 +81,14 @@ module.exports = function (app) {
   // Borrar usuarios
   app.delete('/users/:id', (req, res) => {
     User.deleteUser(req.params.id, (err, data) => {
-      if ((data && data.message === 'user deleted') || (data.message === 'user deleted')) {
+      if ((data && data.message === 'Usuario borrado')) {
         res.json({
           success: true,
           data
         })
       } else if (err) {
         res.status(500).json({
-          message: `Error ${err}`
+          message: `Ha ocurrido un error con el servidor: ${err}`
         })
       }
     })

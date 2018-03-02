@@ -53,29 +53,44 @@ module.exports = function (app) {
   })
   // Insertando usuario
   app.post('/users', (req, res) => {
-  const userData = {
-    idUsuarios: req.params.id,
-    nombres: req.body.nombres,
-    apellidos: req.body.apellidos,
-    contraseña: req.body.contraseña,
-    email: req.body.email,
-    rol: req.body.rol,
-    codigo: req.body.codigo,
-  }
-  User.insertUser(userData, (err, data) => {
-    if (data && data.insertId) {
-      console.log(data)
-      res.json({
-        success: true,
-        msg: 'Usuario insertado',
-        data: data
-      })
-    } else if (err) {
-      res.status(500).json({
-        success: false,
-        message: `Error ${err}`
-      })
+    const userData = {
+      idUsuarios: req.params.id,
+      nombres: req.body.nombres,
+      apellidos: req.body.apellidos,
+      contraseña: req.body.contraseña,
+      email: req.body.email,
+      rol: req.body.rol,
+      codigo: req.body.codigo
     }
+    User.insertUser(userData, (err, data) => {
+      if (data && data.insertId) {
+        console.log(data)
+        res.json({
+          success: true,
+          msg: 'Usuario insertado',
+          data: data
+        })
+      } else if (err) {
+        res.status(500).json({
+          success: false,
+          message: `Error ${err}`
+        })
+      }
+    })
   })
-})
+  // Borrar usuarios
+  app.delete('/users/:id', (req, res) => {
+    User.deleteUser(req.params.id, (err, data) => {
+      if ((data && data.message === 'user deleted') || (data.message === 'user deleted')) {
+        res.json({
+          success: true,
+          data
+        })
+      } else if (err) {
+        res.status(500).json({
+          message: `Error ${err}`
+        })
+      }
+    })
+  })
 }

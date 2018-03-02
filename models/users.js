@@ -8,7 +8,7 @@ userModel.getUsers = async (callback) => {
   if (connection) {
     await connection.query('SELECT * FROM usuarios ORDER BY idUsuarios', (err, rows) => {
       if (err) {
-        throw err
+        return console.log(`Ha ocorrido un error: ${err.message}`)
       } else {
         callback(null, rows)
       }
@@ -20,7 +20,7 @@ userModel.getUser = async (id, callback) => {
   if (connection) {
     await connection.query(`SELECT * FROM usuarios WHERE idUsuarios = ${connection.escape(id)}`, (err, rows) => {
       if (err) {
-        throw err
+        return console.log(`Ha ocorrido un error: ${err.message}`)
       } else {
         callback(null, rows)
       }
@@ -41,7 +41,7 @@ userModel.updateUser = async (userData, callback) => {
 
     await connection.query(sql, (err, rows) => {
       if (err) {
-        throw err
+        return console.log(`Ha ocorrido un error: ${err.message}`)
       } else {
         callback(null, {'message': 'Usuario actualizado'})
       }
@@ -53,12 +53,9 @@ userModel.insertUser = async (userData, callback) => {
   if (connection) {
     await connection.query('INSERT INTO usuarios SET ?', userData, (err, rows) => {
       if (err) {
-        console.log(err)
-        throw err
+        return console.log(`Ha ocorrido un error: ${err.message}`)
       } else {
-        callback(null, {
-          'insertId': rows.insertId
-        })
+        callback(null, {'insertId': rows.insertId})
       }
     })
   }

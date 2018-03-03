@@ -6,7 +6,7 @@ const databasePass = require('../config')
 const connection = mysql.createConnection({
   host: 'localhost',
   user: 'root',
-  password: databasePass,
+  password: databasePass || process.env.password,
   database: 'collegepw'
 })
 

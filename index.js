@@ -6,10 +6,10 @@ const app = express()
 const morgan = require('morgan')
 const bodyParser = require('body-parser')
 
-const port = 3000
+const port = 3001
 
 // settings
-app.set('port', process.env.PORT || port)
+app.set('port', (process.env.PORT || 5000))
 
 // middlewares
 app.use(morgan('dev'))
@@ -21,6 +21,6 @@ app.use(bodyParser.urlencoded({
 // routes
 require('./routes/index')(app)
 
-app.listen(app.get('port'), () => {
-  console.log(`REST api listening on port: ${port}`)
+app.listen(app.get('port'), function () {
+  console.log('Utopia-db corriendo en el puerto ', app.get('port'))
 })

@@ -13,7 +13,6 @@ module.exports = async function (app) {
     })
   })
   // Obtener un solo usuario
-
   await app.get('/users/:id', async (req, res) => {
     await User.getUser(req.params.id, async (err, data) => {
       if (err) {
@@ -24,7 +23,6 @@ module.exports = async function (app) {
     })
   })
   // Modificar un usuario
-
   await app.put('/users/:id', async (req, res) => {
     const userData = {
       idUsuarios: req.params.id,
@@ -53,7 +51,6 @@ module.exports = async function (app) {
     })
   })
   // Insertando usuario
-
   await app.post('/users', async (req, res) => {
     const userData = {
       idUsuarios: req.params.id,
@@ -80,7 +77,6 @@ module.exports = async function (app) {
     })
   })
   // Borrar usuarios
-
   await app.delete('/users/:id', async (req, res) => {
     await User.deleteUser(req.params.id, async (err, data) => {
       if ((data && data.message === 'Usuario borrado')) {

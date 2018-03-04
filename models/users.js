@@ -2,15 +2,15 @@
 
 let connection = require('../db/index')
 
-let userModel = {}
+const userModel = {}
 
 userModel.getUsers = async (callback) => {
   if (connection) {
-    await connection.query('SELECT * FROM usuarios ORDER BY idUsuarios', (err, rows) => {
+    await connection.query('SELECT * FROM usuarios ORDER BY idUsuarios', async (err, rows) => {
       if (err) {
         return console.log(`Ha ocorrido un error: ${err.message}`)
       } else {
-        callback(null, rows)
+        await callback(null, rows)
       }
     })
   }
@@ -39,11 +39,11 @@ userModel.updateUser = async (userData, callback) => {
         email = ${connection.escape(userData.email)}
         where idUsuarios = ${connection.escape(userData.idUsuarios) || connection.escape(userData.codigo)}`
 
-    await connection.query(sql, (err, rows) => {
+    await connection.query(sql, async (err, rows) => {
       if (err) {
         return console.log(`Ha ocorrido un error: ${err.message}`)
       } else {
-        callback(null, {'message': 'Usuario actualizado'})
+        await callback(null, rows)
       }
     })
   }
@@ -51,31 +51,31 @@ userModel.updateUser = async (userData, callback) => {
 
 userModel.insertUser = async (userData, callback) => {
   if (connection) {
-    await connection.query('INSERT INTO usuarios SET ?', userData, (err, rows) => {
+    await connection.query('INSERT INTO usuarios SET ?', userData, async (err, rows) => {
       if (err) {
         return console.log(`Ha ocorrido un error: ${err.message}`)
       } else {
-        callback(null, {'insertId': rows.insertId})
+        await callback(null, {'insertId': rows.insertId})
       }
     })
   }
 }
 
-userModel.deleteUser = (idUsuarios, callback) => {
+userModel.deleteUser = async (idUsuarios, callback) => {
   if (connection) {
     let sql = `SELECT * FROM usuarios WHERE idUsuarios = ${connection.escape(idUsuarios)}`
-    connection.query(sql, (err, row) => {
+    await connection.query(sql, async (err, row) => {
       if (row) {
         let sql = `DELETE FROM usuarios WHERE idUsuarios = ${idUsuarios}`
-        connection.query(sql, (err, req) => {
+        await connection.query(sql, async (err, req) => {
           if (err) {
             return console.log(`Ha ocorrido un error: ${err.message}`)
           } else {
-            callback(null, {'message': 'Usuario borrado'})
+            await callback(null, {'message': 'Usuario borrado'})
           }
         })
       } else if (err) {
-        callback(null, {'message': `Ha ocurrido un error: ${err.message}`})
+        await callback(null, {'message': `Ha ocurrido un error: ${err.message}`})
       }
     })
   }

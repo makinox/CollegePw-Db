@@ -20,6 +20,7 @@ app.use(bodyParser.urlencoded({
 // routes
 require('./routes/index')(app)
 require('./routes/users')(app)
+require('./routes/subjects')(app)
 
 app.listen(app.get('port'), function () {
   console.log('Utopia-db corriendo en el puerto ', app.get('port'))

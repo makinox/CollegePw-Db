@@ -18,11 +18,11 @@ userModel.getUsers = async (callback) => {
 
 userModel.getUser = async (id, callback) => {
   if (connection) {
-    await connection.query(`SELECT * FROM usuarios WHERE idUsuarios = ${connection.escape(id)}`, (err, rows) => {
+    await connection.query(`SELECT * FROM usuarios WHERE idUsuarios = ${connection.escape(id)}`, async (err, rows) => {
       if (err) {
         return console.log(`Ha ocorrido un error: ${err.message}`)
       } else {
-        callback(null, rows)
+        await callback(null, rows)
       }
     })
   }

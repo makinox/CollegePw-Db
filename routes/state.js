@@ -1,12 +1,12 @@
 'use strict'
 
-const Sub = require('../models/subjects')
+const St = require('../models/state')
 
 module.exports = async function (app) {
-  // Obtener todas las clases
+  // Obtener todos los estadps
 
-  await app.get('/subjects', async (req, res) => {
-    await Sub.getSubjects(async (err, data) => {
+  await app.get('/stats', async (req, res) => {
+    await St.getStats(async (err, data) => {
       if (err) {
         return console.log(`Ocurrio algun error: ${err.message}`)
       } else {
@@ -14,9 +14,9 @@ module.exports = async function (app) {
       }
     })
   })
-  // Obtener un solo usuario
-  await app.get('/subjects/:id', async (req, res) => {
-    await Sub.getSubject(req.params.id, async (err, data) => {
+  // Obtener un solo estado
+  await app.get('/stats/:id&:as', async (req, res) => {
+    await St.getStat(req.params.id, req.params.as, async (err, data) => {
       if (err) {
         console.log(`No existe ${err}`)
       } else {
@@ -24,18 +24,18 @@ module.exports = async function (app) {
       }
     })
   })
-  // Modificar un usuario
-  await app.put('/subjects/:id', async (req, res) => {
+    // Modificar un estado
+  await app.put('/stats/:id&:as', async (req, res) => {
     const userData = {
       idAsignaturas: req.params.id,
-      nombreCurso: req.body.nombreCurso,
-      periodo: req.body.periodo,
-      curso: req.body.curso,
-      codigoG: req.body.codigoG,
-      created_at: null,
-      updated_at: null
+      idCalificaciones: req.params.as,
+      calificacionEstudiante: req.body.calificacionEstudiante,
+      calificacionProfesores: req.body.calificacionProfesores,
+      nota1: req.body.nota1,
+      nota2: req.body.nota2,
+      nota3: req.body.nota3
     }
-    await Sub.updateSubject(userData, async (err, data) => {
+    await St.updateStat(userData, async (err, data) => {
       if (err) {
         res.json({
           success: false,
@@ -50,17 +50,19 @@ module.exports = async function (app) {
       }
     })
   })
-  // Insertando usuario
-  await app.post('/subjects', async (req, res) => {
+    // Insertando usuario
+  await app.post('/stats', async (req, res) => {
     const userData = {
-      idAsignaturas: req.params.id,
-      nombreCurso: req.body.nombreCurso,
-      periodo: req.body.periodo,
-      curso: req.body.curso,
-      codigoG: req.body.codigoG
+      idUsuarios: req.body.id,
+      idAsignaturas: req.body.us,
+      calificacionEstudiante: req.body.calificacionEstudiante,
+      calificacionProfesores: req.body.calificacionProfesores,
+      nota1: req.body.nota1,
+      nota2: req.body.nota2,
+      nota3: req.body.nota3
     }
-    await Sub.insertSubject(userData, async (err, data) => {
-      if (data && data.insertId) {
+    await St.insertStat(userData, async (err, data) => {
+      if (data) {
         await res.json({
           success: true,
           msg: 'Usuario insertado',
@@ -74,9 +76,9 @@ module.exports = async function (app) {
       }
     })
   })
-  // Borrar usuarios
-  await app.delete('/subjects/:id', async (req, res) => {
-    await Sub.deleteSubject(req.params.id, async (err, data) => {
+    // Borrar usuarios
+  await app.delete('/stats/:id&:as', async (req, res) => {
+    await St.deleteStat(req.params.id, req.params.as, async (err, data) => {
       if ((data && data.message === 'Usuario borrado')) {
         await res.json({
           success: true,

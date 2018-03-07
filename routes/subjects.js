@@ -1,3 +1,5 @@
+'use strict'
+
 const Sub = require('../models/subjects')
 
 module.exports = async function (app) {

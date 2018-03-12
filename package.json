@@ -5,6 +5,7 @@
   "main": "index.js",
   "dependencies": {
     "async": "^2.6.0",
+    "debug.log": "0.0.3",
     "express": "^4.16.2",
     "morgan": "^1.9.0",
     "mysql": "^2.15.0",

@@ -51,7 +51,8 @@ subjectsModel.insertSubject = async (userData, callback) => {
   if (connection) {
     await connection.query('INSERT INTO asignaturas SET ?', userData, async (err, rows) => {
       if (err) {
-        return console.log(`Ha ocorrido un error: ${err.message}`)
+        console.log(`Ha ocorrido un error: ${err.message}`)
+        await callback(null, `Lo que llega desde el frontend: ${rows}`)
       } else {
         await callback(null, {'insertId': rows.insertId})
       }

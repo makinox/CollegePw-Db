@@ -27,6 +27,7 @@ app.use(bodyParser.urlencoded({
 
 // Rutas
 require('./routes/index')(app)
+require('./routes/auth')(app)
 require('./routes/users')(app)
 require('./routes/subjects')(app)
 require('./routes/state')(app)

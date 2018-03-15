@@ -10,7 +10,7 @@ module.exports = async function (app) {
       if (err) {
         return console.log(`Ocurrio algun error: ${err.message}`)
       } else {
-        await res.status(200).json(data)
+        await res.status(200).jsonp(data)
       }
     })
   })
@@ -20,7 +20,7 @@ module.exports = async function (app) {
       if (err) {
         console.log(`No existe ${err}`)
       } else {
-        await res.status(200).json(data)
+        await res.status(200).jsonp(data)
       }
     })
   })
@@ -37,12 +37,12 @@ module.exports = async function (app) {
     }
     await St.updateStat(userData, async (err, data) => {
       if (err) {
-        res.json({
+        res.jsonp({
           success: false,
           message: `Ha ocurrido un error con el servidor: ${err}`
         })
       } else {
-        await res.json({
+        await res.jsonp({
           success: true,
           message: 'Usuario actualizado',
           data
@@ -63,13 +63,13 @@ module.exports = async function (app) {
     }
     await St.insertStat(userData, async (err, data) => {
       if (data) {
-        await res.json({
+        await res.jsonp({
           success: true,
           msg: 'Usuario insertado',
           data: data
         })
       } else if (err) {
-        res.status(500).json({
+        res.status(500).jsonp({
           success: false,
           message: `Ha ocurrido un error con el servidor: ${err}`
         })
@@ -80,12 +80,12 @@ module.exports = async function (app) {
   await app.delete('/stats/:id&:as', async (req, res) => {
     await St.deleteStat(req.params.id, req.params.as, async (err, data) => {
       if ((data && data.message === 'Usuario borrado')) {
-        await res.json({
+        await res.jsonp({
           success: true,
           data
         })
       } else if (err) {
-        res.status(500).json({
+        res.status(500).jsonp({
           message: `Ha ocurrido un error con el servidor: ${err}`
         })
       }

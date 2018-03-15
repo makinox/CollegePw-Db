@@ -10,7 +10,7 @@ module.exports = async function (app) {
       if (err) {
         return console.log(`Ocurrio algun error: ${err.message}`)
       } else {
-        await res.status(200).json(data)
+        await res.status(200).jsonp(data)
       }
     })
   })
@@ -20,7 +20,7 @@ module.exports = async function (app) {
       if (err) {
         console.log(`No existe ${err}`)
       } else {
-        await res.status(200).json(data)
+        await res.status(200).jsonp(data)
       }
     })
   })
@@ -37,14 +37,14 @@ module.exports = async function (app) {
     }
     await Sub.updateSubject(userData, async (err, data) => {
       if (err) {
-        res.json({
+        res.jsonp({
           success: false,
           message: `Ha ocurrido un error con el servidor: ${err}`
         })
       } else {
-        await res.json({
+        await res.jsonp({
           success: true,
-          message: 'Usuario actualizado',
+          message: 'Asignatura actualizada',
           data
         })
       }
@@ -61,13 +61,13 @@ module.exports = async function (app) {
     }
     await Sub.insertSubject(userData, async (err, data) => {
       if (data && data.insertId) {
-        await res.json({
+        await res.jsonp({
           success: true,
-          msg: 'Usuario insertado',
+          msg: 'Asignatura insertada',
           data: data
         })
       } else if (err) {
-        res.status(500).json({
+        res.status(500).jsonp({
           success: false,
           message: `Ha ocurrido un error con el servidor: ${err}`
         })
@@ -77,13 +77,13 @@ module.exports = async function (app) {
   // Borrar usuarios
   await app.delete('/subjects/:id', async (req, res) => {
     await Sub.deleteSubject(req.params.id, async (err, data) => {
-      if ((data && data.message === 'Usuario borrado')) {
-        await res.json({
+      if ((data && data.message === 'Asignutura borrada')) {
+        await res.jsonp({
           success: true,
           data
         })
       } else if (err) {
-        res.status(500).json({
+        res.status(500).jsonp({
           message: `Ha ocurrido un error con el servidor: ${err}`
         })
       }

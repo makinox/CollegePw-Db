@@ -8,7 +8,7 @@ module.exports = async function (app) {
       if (err) {
         return console.log(`Ocurrio algun error: ${err.message}`)
       } else {
-        await res.status(200).json(data)
+        await res.status(200).jsonp(data)
       }
     })
   })

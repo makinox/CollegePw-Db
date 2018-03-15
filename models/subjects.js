@@ -70,7 +70,7 @@ subjectsModel.deleteSubject = async (idAsignaturas, callback) => {
           if (err) {
             return console.log(`Ha ocorrido un error: ${err.message}`)
           } else {
-            await callback(null, {'message': 'Usuario borrado'})
+            await callback(null, {'message': 'Asignatura borrada'})
           }
         })
       } else if (err) {

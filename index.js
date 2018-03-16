@@ -11,9 +11,10 @@ app.set('port', (process.env.PORT || 3001))
 // Headers
 app.use(function (req, res, next) {
   res.header('Access-Control-Allow-Origin', '*')
+  res.header('Access-Control-Allow-Methods', 'GET, POST, PATCH, PUT, DELETE, OPTIONS')
   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept')
-  res.header('Content-Security-Policy')
-  res.header('upgrade-insecure-requests')
+  // res.header('Content-Security-Policy')
+  // res.header('upgrade-insecure-requests')
   next()
 })
 

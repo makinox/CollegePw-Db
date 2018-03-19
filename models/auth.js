@@ -6,7 +6,7 @@ const authModel = {}
 
 authModel.validate = async (id, pass, callback) => {
   if (connection) {
-    await connection.query(`SELECT * FROM usuarios WHERE idUsuarios = ${connection.escape(id)}
+    await connection.query(`SELECT * FROM usuarios WHERE usuario = ${connection.escape(id)}
     AND contraseña =${connection.escape(pass)}`, async (err, rows) => {
       if (err) {
         return console.log(`Ha ocorrido un error: ${err.message}`)

@@ -13,6 +13,8 @@ indexModel.anything = async (callback) => {
         await callback(null, rows)
       }
     })
+  } else {
+    await callback(null, {message: 'No hay conexion'})
   }
 }
 

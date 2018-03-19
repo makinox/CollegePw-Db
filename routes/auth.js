@@ -5,9 +5,12 @@
     await app.get('/auth/:id&:ps', async (req, res) => {
       await Auth.validate(req.params.id, req.params.ps, async (err, data) => {
         if (err) {
-          console.log(`No existe ${err}`)
+          res.jsonp({
+            success: false,
+            message: `Ha ocurrido un error: ${err}`
+          })
         } else {
-          await res.status(200).jsonp(data)
+          await res.jsonp(data)
         }
       })
     })

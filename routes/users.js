@@ -10,7 +10,7 @@ module.exports = async function (app) {
           message: `Ocurrio el siguiente error: ${err}`
         })
       } else {
-        await res.status(200).jsonp(data)
+        await res.jsonp(data)
       }
     })
   })
@@ -24,7 +24,7 @@ module.exports = async function (app) {
           message: `Ocurrio el siguiente error: ${err}`
         })
       } else {
-        await res.status(200).jsonp(data)
+        await res.jsonp(data)
       }
     })
   })
@@ -48,8 +48,7 @@ module.exports = async function (app) {
         })
       } else {
         await res.jsonp({
-          success: true,
-          message: 'Usuario actualizado'
+          success: true
         })
       }
     })
@@ -73,8 +72,7 @@ module.exports = async function (app) {
         })
       } else {
         await res.jsonp({
-          success: true,
-          message: 'Usuario insertado'
+          success: true
         })
       }
     })
@@ -90,8 +88,7 @@ module.exports = async function (app) {
         })
       } else {
         res.jsonp({
-          success: true,
-          message: `Usuario borrado`
+          success: true
         })
       }
     })

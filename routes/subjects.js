@@ -46,8 +46,7 @@ module.exports = async function (app) {
         })
       } else {
         await res.jsonp({
-          success: true,
-          message: 'Asignatura actualizada'
+          success: true
         })
       }
     })
@@ -69,8 +68,7 @@ module.exports = async function (app) {
         })
       } else {
         await res.jsonp({
-          success: true,
-          message: 'Asignatura insertada'
+          success: true
         })
       }
     })
@@ -85,8 +83,7 @@ module.exports = async function (app) {
         })
       } else {
         await res.jsonp({
-          success: true,
-          message: 'Asignatura eliminada'
+          success: true
         })
       }
     })

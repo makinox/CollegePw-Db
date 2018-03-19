@@ -49,8 +49,7 @@ module.exports = async function (app) {
         })
       } else {
         await res.jsonp({
-          success: true,
-          message: 'Estado actualizado'
+          success: true
         })
       }
     })
@@ -74,8 +73,7 @@ module.exports = async function (app) {
         })
       } else {
         await res.jsonp({
-          success: true,
-          message: 'Estado actualizado'
+          success: true
         })
       }
     })
@@ -90,8 +88,7 @@ module.exports = async function (app) {
         })
       } else {
         await res.jsonp({
-          success: true,
-          message: 'Estado actualizado'
+          success: true
         })
       }
     })

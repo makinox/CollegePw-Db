@@ -17,6 +17,8 @@ authModel.validate = async (id, pass, callback) => {
         await callback(null, false)
       }
     })
+  } else {
+    await callback(null, {message: 'No hay conexion'})
   }
 }
 

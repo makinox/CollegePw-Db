@@ -2,50 +2,54 @@ const User = require('../models/users')
 
 module.exports = async function (app) {
   // Obtener todos los usuarios
-
   await app.get('/users', async (req, res) => {
     await User.getUsers(async (err, data) => {
       if (err) {
-        console.log(`No existe ${err}`)
+        res.jsonp({
+          success: false,
+          message: `Ocurrio el siguiente error: ${err}`
+        })
       } else {
         await res.status(200).jsonp(data)
       }
     })
   })
+
   // Obtener un solo usuario
   await app.get('/users/:id', async (req, res) => {
     await User.getUser(req.params.id, async (err, data) => {
       if (err) {
-        console.log(`No existe ${err}`)
+        res.jsonp({
+          success: false,
+          message: `Ocurrio el siguiente error: ${err}`
+        })
       } else {
         await res.status(200).jsonp(data)
       }
     })
   })
+
   // Modificar un usuario
   await app.put('/users/:id', async (req, res) => {
     const userData = {
-      idUsuarios: req.params.id,
       nombres: req.body.nombres,
       apellidos: req.body.apellidos,
       contraseña: req.body.contraseña,
       email: req.body.email,
       rol: req.body.rol,
-      codigo: req.body.codigo,
-      created_at: null,
-      updated_at: null
+      documento: req.body.documento,
+      usuario: req.params.id
     }
     await User.updateUser(userData, async (err, data) => {
       if (err) {
         res.jsonp({
           success: false,
-          message: `Ha ocurrido un error con el servidor: ${err}`
+          message: `Ocurrio el siguiente error: ${err}`
         })
       } else {
         await res.jsonp({
           success: true,
-          message: 'Usuario actualizado',
-          data
+          message: 'Usuario actualizado'
         })
       }
     })
@@ -53,40 +57,41 @@ module.exports = async function (app) {
   // Insertando usuario
   await app.post('/users', async (req, res) => {
     const userData = {
-      idUsuarios: req.params.id,
       nombres: req.body.nombres,
       apellidos: req.body.apellidos,
       contraseña: req.body.contraseña,
       email: req.body.email,
       rol: req.body.rol,
-      codigo: req.body.codigo
+      documento: req.body.documento,
+      usuario: req.body.usuario
     }
     await User.insertUser(userData, async (err, data) => {
-      if (data && data.insertId) {
+      if (err) {
+        res.jsonp({
+          success: false,
+          message: `Ocurrio el siguiente error: ${err}`
+        })
+      } else {
         await res.jsonp({
           success: true,
-          msg: 'Usuario insertado',
-          data: data
-        })
-      } else if (err) {
-        res.status(500).jsonp({
-          success: false,
-          message: `Ha ocurrido un error con el servidor: ${err}`
+          message: 'Usuario insertado'
         })
       }
     })
   })
+
   // Borrar usuarios
   await app.delete('/users/:id', async (req, res) => {
     await User.deleteUser(req.params.id, async (err, data) => {
-      if ((data && data.message === 'Usuario borrado')) {
-        await res.jsonp({
-          success: true,
-          data
+      if (err) {
+        res.jsonp({
+          success: false,
+          message: `Ocurrio el siguiente error: ${err}`
         })
-      } else if (err) {
-        res.status(500).jsonp({
-          message: `Ha ocurrido un error con el servidor: ${err}`
+      } else {
+        res.jsonp({
+          success: true,
+          message: `Usuario borrado`
         })
       }
     })

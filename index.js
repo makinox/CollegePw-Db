@@ -21,10 +21,7 @@ app.use(function (req, res, next) {
 // Middlewares
 app.use(morgan('dev'))
 app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({
-  type: 'application/x-www-form-urlencoded',
-  extended: true
-}))
+app.use(bodyParser.urlencoded({type: 'application/x-www-form-urlencoded', extended: true}))
 
 // Rutas
 require('./routes/index')(app)
@@ -34,6 +31,4 @@ require('./routes/subjects')(app)
 require('./routes/state')(app)
 
 // Conección
-app.listen(app.get('port'), function () {
-  console.log('Utopia-db corriendo en el puerto ', app.get('port'))
-})
+app.listen(app.get('port'), () => { console.log('Utopia-db corriendo en el puerto ', app.get('port')) })

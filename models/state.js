@@ -8,11 +8,13 @@ statModel.getStats = async (callback) => {
   if (connection) {
     await connection.query('SELECT * FROM calificaciones ORDER BY idCalificaciones', async (err, rows) => {
       if (err) {
-        return console.log(`Ha ocorrido un error: ${err.message}`)
+        return callback(null, {message: `Ha ocorrido el siguiente error: ${err.message}`})
       } else {
         await callback(null, rows)
       }
     })
+  } else {
+    await callback(null, {message: 'No hay conexion'})
   }
 }
 
@@ -21,11 +23,13 @@ statModel.getStat = async (id, as, callback) => {
     await connection.query(`SELECT * FROM calificaciones WHERE idUsuarios = ${connection.escape(id)}
     AND idAsignaturas = ${connection.escape(as)}`, async (err, rows) => {
       if (err) {
-        return console.log(`Ha ocorrido un error: ${err.message}`)
+        return callback(null, {message: `Ha ocorrido el siguiente error: ${err.message}`})
       } else {
         await callback(null, rows)
       }
     })
+  } else {
+    await callback(null, {message: 'No hay conexion'})
   }
 }
 
@@ -44,11 +48,13 @@ statModel.updateStat = async (userData, callback) => {
 
     await connection.query(sql, async (err, rows) => {
       if (err) {
-        return console.log(`Ha ocorrido un error: ${err.message}`)
+        return callback(null, {message: `Ha ocorrido el siguiente error: ${err.message}`})
       } else {
         await callback(null, rows)
       }
     })
+  } else {
+    await callback(null, {message: 'No hay conexion'})
   }
 }
 
@@ -56,7 +62,7 @@ statModel.insertStat = async (userData, callback) => {
   if (connection) {
     await connection.query('INSERT INTO calificaciones SET ?', userData, async (err, rows) => {
       if (err) {
-        return console.log(`Ha ocorrido un error: ${err.message}`)
+        return callback(null, {message: `Ha ocorrido el siguiente error: ${err.message}`})
       } else {
         await callback(null, {'Calificacion agregada': rows})
       }
@@ -74,15 +80,17 @@ statModel.deleteStat = async (id, as, callback) => {
         AND idAsignaturas = ${as}`
         await connection.query(sql, async (err, req) => {
           if (err) {
-            return console.log(`Ha ocorrido un error: ${err.message}`)
+            return callback(null, {message: `Ha ocorrido el siguiente error: ${err.message}`})
           } else {
-            await callback(null, {'message': 'Usuario borrado'})
+            await callback(null, {message: 'Usuario borrado'})
           }
         })
       } else if (err) {
-        await callback(null, {'message': `Ha ocurrido un error: ${err.message}`})
+        await callback(null, {message: `Ha ocurrido un error: ${err.message}`})
       }
     })
+  } else {
+    await callback(null, {message: 'No hay conexion'})
   }
 }
 

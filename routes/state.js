@@ -8,9 +8,12 @@ module.exports = async function (app) {
   await app.get('/stats', async (req, res) => {
     await St.getStats(async (err, data) => {
       if (err) {
-        return console.log(`Ocurrio algun error: ${err.message}`)
+        res.jsonp({
+          success: false,
+          message: `Ocurrio el siguiente error: ${err}`
+        })
       } else {
-        await res.status(200).jsonp(data)
+        await res.jsonp(data)
       }
     })
   })
@@ -18,9 +21,12 @@ module.exports = async function (app) {
   await app.get('/stats/:id&:as', async (req, res) => {
     await St.getStat(req.params.id, req.params.as, async (err, data) => {
       if (err) {
-        console.log(`No existe ${err}`)
+        res.jsonp({
+          success: false,
+          message: `Ocurrio el siguiente error: ${err}`
+        })
       } else {
-        await res.status(200).jsonp(data)
+        await res.jsonp(data)
       }
     })
   })
@@ -44,8 +50,7 @@ module.exports = async function (app) {
       } else {
         await res.jsonp({
           success: true,
-          message: 'Usuario actualizado',
-          data
+          message: 'Estado actualizado'
         })
       }
     })
@@ -62,16 +67,15 @@ module.exports = async function (app) {
       nota3: req.body.nota3
     }
     await St.insertStat(userData, async (err, data) => {
-      if (data) {
-        await res.jsonp({
-          success: true,
-          msg: 'Usuario insertado',
-          data: data
-        })
-      } else if (err) {
-        res.status(500).jsonp({
+      if (err) {
+        res.jsonp({
           success: false,
           message: `Ha ocurrido un error con el servidor: ${err}`
+        })
+      } else {
+        await res.jsonp({
+          success: true,
+          message: 'Estado actualizado'
         })
       }
     })
@@ -79,14 +83,15 @@ module.exports = async function (app) {
     // Borrar usuarios
   await app.delete('/stats/:id&:as', async (req, res) => {
     await St.deleteStat(req.params.id, req.params.as, async (err, data) => {
-      if ((data && data.message === 'Usuario borrado')) {
+      if (err) {
+        res.jsonp({
+          success: false,
+          message: `Ha ocurrido un error con el servidor: ${err}`
+        })
+      } else {
         await res.jsonp({
           success: true,
-          data
-        })
-      } else if (err) {
-        res.status(500).jsonp({
-          message: `Ha ocurrido un error con el servidor: ${err}`
+          message: 'Estado actualizado'
         })
       }
     })

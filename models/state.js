@@ -8,7 +8,8 @@ statModel.getStats = async (callback) => {
   if (connection) {
     await connection.query('SELECT * FROM calificaciones ORDER BY idCalificaciones', async (err, rows) => {
       if (err) {
-        return callback(null, {message: `Ha ocorrido el siguiente error: ${err.message}`})
+        console.log(`Ha ocorrido el siguiente error: ${err.message}`)
+        callback(null, {error: `Ha ocorrido el siguiente error: ${err.message}`})
       } else {
         await callback(null, rows)
       }
@@ -18,12 +19,12 @@ statModel.getStats = async (callback) => {
   }
 }
 
-statModel.getStat = async (id, as, callback) => {
+statModel.getStat = async (as, callback) => {
   if (connection) {
-    await connection.query(`SELECT * FROM calificaciones WHERE idUsuarios = ${connection.escape(id)}
-    AND idAsignaturas = ${connection.escape(as)}`, async (err, rows) => {
+    await connection.query(`SELECT * FROM calificaciones WHERE idAsignaturas = ${connection.escape(as)}`, async (err, rows) => {
       if (err) {
-        return callback(null, {message: `Ha ocorrido el siguiente error: ${err.message}`})
+        console.log(`Ha ocorrido el siguiente error: ${err.message}`)
+        callback(null, {error: `Ha ocorrido el siguiente error: ${err.message}`})
       } else {
         await callback(null, rows)
       }
@@ -32,6 +33,14 @@ statModel.getStat = async (id, as, callback) => {
     await callback(null, {message: 'No hay conexion'})
   }
 }
+
+// statModel.getRelation = async (id,as) => {
+//   if (connection) {
+//     await connection.query(`SELECT * FROM calificaciones `)
+//   } else {
+//     await callback(null, {message: 'No hay conexion'})
+//   }
+// }
 
 statModel.updateStat = async (userData, callback) => {
   if (connection) {
@@ -48,7 +57,8 @@ statModel.updateStat = async (userData, callback) => {
 
     await connection.query(sql, async (err, rows) => {
       if (err) {
-        return callback(null, {message: `Ha ocorrido el siguiente error: ${err.message}`})
+        console.log(`Ha ocorrido el siguiente error: ${err.message}`)
+        callback(null, {error: `Ha ocorrido el siguiente error: ${err.message}`})
       } else {
         await callback(null, rows)
       }
@@ -62,7 +72,8 @@ statModel.insertStat = async (userData, callback) => {
   if (connection) {
     await connection.query('INSERT INTO calificaciones SET ?', userData, async (err, rows) => {
       if (err) {
-        return callback(null, {message: `Ha ocorrido el siguiente error: ${err.message}`})
+        console.log(`Ha ocorrido el siguiente error: ${err.message}`)
+        callback(null, {error: `Ha ocorrido el siguiente error: ${err.message}`})
       } else {
         await callback(null, {'Calificacion agregada': rows})
       }
@@ -80,13 +91,15 @@ statModel.deleteStat = async (id, as, callback) => {
         AND idAsignaturas = ${as}`
         await connection.query(sql, async (err, req) => {
           if (err) {
-            return callback(null, {message: `Ha ocorrido el siguiente error: ${err.message}`})
+            console.log(`Ha ocorrido el siguiente error: ${err.message}`)
+            callback(null, {error: `Ha ocorrido el siguiente error: ${err.message}`})
           } else {
             await callback(null, {message: 'Usuario borrado'})
           }
         })
       } else if (err) {
-        await callback(null, {message: `Ha ocurrido un error: ${err.message}`})
+        console.log(`Ha ocorrido el siguiente error: ${err.message}`)
+        callback(null, {error: `Ha ocorrido el siguiente error: ${err.message}`})
       }
     })
   } else {

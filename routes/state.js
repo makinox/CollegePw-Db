@@ -7,26 +7,26 @@ module.exports = async function (app) {
 
   await app.get('/stats', async (req, res) => {
     await St.getStats(async (err, data) => {
-      if (err) {
+      if (data.error || err) {
         res.jsonp({
           success: false,
-          message: `Ocurrio el siguiente error: ${err}`
+          data
         })
       } else {
-        await res.jsonp(data)
+        await res.jsonp({data})
       }
     })
   })
-  // Obtener un solo estado
-  await app.get('/stats/:id&:as', async (req, res) => {
-    await St.getStat(req.params.id, req.params.as, async (err, data) => {
-      if (err) {
+  // Obtener una sola materia
+  await app.get('/stats/:as', async (req, res) => {
+    await St.getStat(req.params.as, async (err, data) => {
+      if (data.error || err) {
         res.jsonp({
           success: false,
-          message: `Ocurrio el siguiente error: ${err}`
+          data
         })
       } else {
-        await res.jsonp(data)
+        await res.jsonp({data})
       }
     })
   })
@@ -42,10 +42,10 @@ module.exports = async function (app) {
       nota3: req.body.nota3
     }
     await St.updateStat(userData, async (err, data) => {
-      if (err) {
+      if (data.error || err) {
         res.jsonp({
           success: false,
-          message: `Ha ocurrido un error con el servidor: ${err}`
+          data
         })
       } else {
         await res.jsonp({
@@ -54,11 +54,11 @@ module.exports = async function (app) {
       }
     })
   })
-    // Insertando usuario
+    // Insertando todas las estadisticas
   await app.post('/stats', async (req, res) => {
     const userData = {
-      idUsuarios: req.body.id,
-      idAsignaturas: req.body.us,
+      usuario: req.body.usuario,
+      idAsignaturas: req.body.idAsignaturas,
       calificacionEstudiante: req.body.calificacionEstudiante,
       calificacionProfesores: req.body.calificacionProfesores,
       nota1: req.body.nota1,
@@ -66,10 +66,10 @@ module.exports = async function (app) {
       nota3: req.body.nota3
     }
     await St.insertStat(userData, async (err, data) => {
-      if (err) {
+      if (data.error || err) {
         res.jsonp({
           success: false,
-          message: `Ha ocurrido un error con el servidor: ${err}`
+          data
         })
       } else {
         await res.jsonp({
@@ -81,10 +81,10 @@ module.exports = async function (app) {
     // Borrar usuarios
   await app.delete('/stats/:id&:as', async (req, res) => {
     await St.deleteStat(req.params.id, req.params.as, async (err, data) => {
-      if (err) {
+      if (data.error || err) {
         res.jsonp({
           success: false,
-          message: `Ha ocurrido un error con el servidor: ${err}`
+          data
         })
       } else {
         await res.jsonp({

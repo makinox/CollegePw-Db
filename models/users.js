@@ -62,7 +62,7 @@ userModel.insertUser = async (userData, callback) => {
       if (err) {
         return callback(null, {message: `Ha ocorrido el siguiente error: ${err.message}`})
       } else {
-        await callback(null, {'insertId': rows.insertId})
+        await callback(null, {message: 'Usuario agregado'})
       }
     })
   }
@@ -78,11 +78,11 @@ userModel.deleteUser = async (usuario, callback) => {
           if (err) {
             return callback(null, {message: `Ha ocorrido el siguiente error: ${err.message}`})
           } else {
-            await callback(null, {'message': 'Usuario borrado'})
+            await callback(null, {message: 'Usuario borrado'})
           }
         })
       } else if (err) {
-        await callback(null, {'message': `Ha ocurrido un error en el seleccionado: ${err.message}`})
+        await callback(null, {message: `Ha ocurrido un error en el seleccionado: ${err.message}`})
       }
     })
   }

@@ -40,7 +40,7 @@ subjectsModel.updateSubject = async (userData, callback) => {
         periodo = ${connection.escape(userData.periodo)},
         curso = ${connection.escape(userData.curso)},
         codigoG = ${connection.escape(userData.codigoG)}
-        where idAsignaturas = ${connection.escape(userData.idAsignaturas) || connection.escape(userData.codigo)}`
+        where idAsignaturas = ${connection.escape(userData.idAsignaturas)}`
     await connection.query(sql, async (err, rows) => {
       if (err) {
         return callback(null, {message: `Ha ocorrido el siguiente error: ${err.message}`})
@@ -57,8 +57,7 @@ subjectsModel.insertSubject = async (userData, callback) => {
   if (connection) {
     await connection.query('INSERT INTO asignaturas SET ?', userData, async (err, rows) => {
       if (err) {
-        console.log(`Ha ocorrido un error: ${err.message}`)
-        await callback(null, `Lo que llega desde el frontend: ${rows}`)
+        return callback(null, {message: `Ha ocorrido el siguiente error: ${err.message}`})
       } else {
         await callback(null, {message: 'Asignatura insertada'})
       }

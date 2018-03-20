@@ -29,6 +29,7 @@ require('./routes/auth')(app)
 require('./routes/users')(app)
 require('./routes/subjects')(app)
 require('./routes/state')(app)
+require('./routes/enty')(app)
 
 // Conección
 app.listen(app.get('port'), () => { console.log('Utopia-db corriendo en el puerto ', app.get('port')) })

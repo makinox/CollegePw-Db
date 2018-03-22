@@ -3,8 +3,7 @@
 const St = require('../models/state')
 
 module.exports = async function (app) {
-  // Obtener todos los estadps
-
+  // Obtener todos los estados
   await app.get('/stats', async (req, res) => {
     await St.getStats(async (err, data) => {
       if (data.error || err) {
@@ -13,11 +12,11 @@ module.exports = async function (app) {
           data
         })
       } else {
-        await res.jsonp({data})
+        await res.jsonp(data)
       }
     })
   })
-  // Obtener una sola materia
+  // Obtener una sola materia dando  la  materia
   await app.get('/stats/:as', async (req, res) => {
     await St.getStat(req.params.as, async (err, data) => {
       if (data.error || err) {
@@ -26,14 +25,29 @@ module.exports = async function (app) {
           data
         })
       } else {
-        await res.jsonp({data})
+        await res.jsonp(data)
       }
     })
   })
-    // Modificar un estado
+
+    // Obtener una sola materia dando  el usuario
+  await app.get('/est/:as', async (req, res) => {
+    await St.getOest(req.params.as, async (err, data) => {
+      if (data.error || err) {
+        res.jsonp({
+          success: false,
+          data
+        })
+      } else {
+        await res.jsonp(data)
+      }
+    })
+  })
+
+  // Modificar un estado
   await app.put('/stats/:id&:as', async (req, res) => {
     const userData = {
-      idAsignaturas: req.params.id,
+      usuario: req.params.id,
       idCalificaciones: req.params.as,
       calificacionEstudiante: req.body.calificacionEstudiante,
       calificacionProfesores: req.body.calificacionProfesores,

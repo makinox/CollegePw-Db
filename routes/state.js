@@ -48,7 +48,7 @@ module.exports = async function (app) {
   await app.put('/stats/:id&:as', async (req, res) => {
     const userData = {
       usuario: req.params.id,
-      idCalificaciones: req.params.as,
+      idAsignaturas: req.params.as,
       calificacionEstudiante: req.body.calificacionEstudiante,
       calificacionProfesores: req.body.calificacionProfesores,
       nota1: req.body.nota1,

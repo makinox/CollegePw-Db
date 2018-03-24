@@ -8,7 +8,8 @@ indexModel.anything = async (callback) => {
   if (connection) {
     await connection.query('SHOW tables', async (err, rows) => {
       if (err) {
-        return callback(null, { message: `Ha ocorrido el siguiente error: ${err.message}` })
+        console.log(`Ha ocorrido el siguiente error: ${err.message}`)
+        callback(null, {error: `Ha ocorrido el siguiente error: ${err.message}`})
       } else {
         await callback(null, rows)
       }

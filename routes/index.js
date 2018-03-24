@@ -5,10 +5,10 @@ module.exports = async function (app) {
 
   await app.get('/', async (req, res) => {
     await Index.anything(async (err, data) => {
-      if (err) {
+      if (data.error || err) {
         res.jsonp({
           success: false,
-          message: `Ha ocurrido un error con el servidor: ${err}`
+          data
         })
       } else {
         await res.jsonp(data)

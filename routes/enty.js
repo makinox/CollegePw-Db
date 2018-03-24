@@ -6,10 +6,10 @@ module.exports = async function (app) {
 // Obtener todas las entidades
   await app.get('/enty', async (req, res) => {
     await Enty.getEntys(async (err, data) => {
-      if (err) {
+      if (data.error || err) {
         res.jsonp({
           success: false,
-          message: `Ocurrio el siguiente error: ${err}`
+          data
         })
       } else {
         await res.jsonp(data)
@@ -19,10 +19,10 @@ module.exports = async function (app) {
 
   await app.get('/enty/:id', async (req, res) => {
     await Enty.getEnty(req.params.id, async (err, data) => {
-      if (err) {
+      if (data.error || err) {
         res.jsonp({
           success: false,
-          message: `Ocurrio el siguiente error: ${err}`
+          data
         })
       } else {
         await res.jsonp(data)
@@ -38,10 +38,10 @@ module.exports = async function (app) {
       servicio: req.body.servicio
     }
     await Enty.register(userData, async (err, data) => {
-      if (err) {
+      if (data.error || err) {
         res.jsonp({
           success: false,
-          message: `Ocurrio el siguiente error: ${err}`
+          data
         })
       } else {
         await res.jsonp({

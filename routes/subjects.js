@@ -6,10 +6,10 @@ module.exports = async function (app) {
   // Obtener todas las clases
   await app.get('/subjects', async (req, res) => {
     await Sub.getSubjects(async (err, data) => {
-      if (err) {
+      if (data.error || err) {
         res.jsonp({
           success: false,
-          message: `Ocurrio el siguiente error: ${err}`
+          data
         })
       } else {
         await res.jsonp(data)
@@ -19,10 +19,10 @@ module.exports = async function (app) {
   // Obtener una sola asignatura
   await app.get('/subjects/:id', async (req, res) => {
     await Sub.getSubject(req.params.id, async (err, data) => {
-      if (err) {
+      if (data.error || err) {
         res.jsonp({
           success: false,
-          message: `Ocurrio el siguiente error: ${err}`
+          data
         })
       } else {
         await res.jsonp(data)
@@ -39,10 +39,10 @@ module.exports = async function (app) {
       codigoG: req.body.codigoG
     }
     await Sub.updateSubject(userData, async (err, data) => {
-      if (err) {
+      if (data.error || err) {
         res.jsonp({
           success: false,
-          message: `Ocurrio el siguiente error: ${err}`
+          data
         })
       } else {
         await res.jsonp({
@@ -61,10 +61,10 @@ module.exports = async function (app) {
       codigoG: req.body.codigoG
     }
     await Sub.insertSubject(userData, async (err, data) => {
-      if (err) {
+      if (data.error || err) {
         res.jsonp({
           success: false,
-          message: `Ocurrio el siguiente error: ${err}`
+          data
         })
       } else {
         await res.jsonp({
@@ -76,10 +76,10 @@ module.exports = async function (app) {
   // Borrar asignaturas
   await app.delete('/subjects/:id', async (req, res) => {
     await Sub.deleteSubject(req.params.id, async (err, data) => {
-      if (err) {
+      if (data.error || err) {
         res.jsonp({
           success: false,
-          message: `Ocurrio el siguiente error: ${err}`
+          data
         })
       } else {
         await res.jsonp({

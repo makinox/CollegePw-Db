@@ -9,7 +9,8 @@ authModel.validate = async (id, pass, callback) => {
     await connection.query(`SELECT * FROM usuarios WHERE usuario = ${connection.escape(id)}
     AND contraseña =${connection.escape(pass)}`, async (err, rows) => {
       if (err) {
-        return console.log(`Ha ocorrido un error: ${err.message}`)
+        console.log(`Ha ocorrido el siguiente error: ${err.message}`)
+        callback(null, {error: `Ha ocorrido el siguiente error: ${err.message}`})
       } else if (rows.length > 0) {
         await callback(null, true)
       } else {

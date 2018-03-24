@@ -8,13 +8,14 @@ subjectsModel.getSubjects = async (callback) => {
   if (connection) {
     await connection.query('SELECT * FROM asignaturas ORDER BY idAsignaturas', async (err, rows) => {
       if (err) {
-        return callback(null, {message: `Ha ocorrido el siguiente error: ${err.message}`})
+        console.log(`Ha ocorrido el siguiente error: ${err.message}`)
+        callback(null, { error: `Ha ocorrido el siguiente error: ${err.message}` })
       } else {
         await callback(null, rows)
       }
     })
   } else {
-    await callback(null, {message: 'No hay conexion'})
+    await callback(null, { message: 'No hay conexion' })
   }
 }
 
@@ -22,13 +23,14 @@ subjectsModel.getSubject = async (id, callback) => {
   if (connection) {
     await connection.query(`SELECT * FROM asignaturas WHERE idAsignaturas = ${connection.escape(id)}`, async (err, rows) => {
       if (err) {
-        return callback(null, {message: `Ha ocorrido el siguiente error: ${err.message}`})
+        console.log(`Ha ocorrido el siguiente error: ${err.message}`)
+        callback(null, { error: `Ha ocorrido el siguiente error: ${err.message}` })
       } else {
         await callback(null, rows)
       }
     })
   } else {
-    await callback(null, {message: 'No hay conexion'})
+    await callback(null, { message: 'No hay conexion' })
   }
 }
 
@@ -43,13 +45,14 @@ subjectsModel.updateSubject = async (userData, callback) => {
         where idAsignaturas = ${connection.escape(userData.idAsignaturas)}`
     await connection.query(sql, async (err, rows) => {
       if (err) {
-        return callback(null, {message: `Ha ocorrido el siguiente error: ${err.message}`})
+        console.log(`Ha ocorrido el siguiente error: ${err.message}`)
+        callback(null, { error: `Ha ocorrido el siguiente error: ${err.message}` })
       } else {
         await callback(null, rows)
       }
     })
   } else {
-    await callback(null, {message: 'No hay conexion'})
+    await callback(null, { message: 'No hay conexion' })
   }
 }
 
@@ -57,13 +60,14 @@ subjectsModel.insertSubject = async (userData, callback) => {
   if (connection) {
     await connection.query('INSERT INTO asignaturas SET ?', userData, async (err, rows) => {
       if (err) {
-        return callback(null, {message: `Ha ocorrido el siguiente error: ${err.message}`})
+        console.log(`Ha ocorrido el siguiente error: ${err.message}`)
+        callback(null, { error: `Ha ocorrido el siguiente error: ${err.message}` })
       } else {
-        await callback(null, {message: 'Asignatura insertada'})
+        await callback(null, { message: 'Asignatura insertada' })
       }
     })
   } else {
-    await callback(null, {message: 'No hay conexion'})
+    await callback(null, { message: 'No hay conexion' })
   }
 }
 
@@ -75,17 +79,19 @@ subjectsModel.deleteSubject = async (idAsignaturas, callback) => {
         let sql = `DELETE FROM asignaturas WHERE idAsignaturas = ${idAsignaturas}`
         await connection.query(sql, async (err, req) => {
           if (err) {
-            return callback(null, {message: `Ha ocorrido el siguiente error: ${err.message}`})
+            console.log(`Ha ocorrido el siguiente error: ${err.message}`)
+            callback(null, { error: `Ha ocorrido el siguiente error: ${err.message}` })
           } else {
-            await callback(null, {message: 'Asignatura borrada'})
+            await callback(null, { message: 'Asignatura borrada' })
           }
         })
       } else if (err) {
-        await callback(null, {message: `Ha ocurrido un error: ${err.message}`})
+        console.log(`Ha ocorrido el siguiente error: ${err.message}`)
+        callback(null, { error: `Ha ocorrido el siguiente error: ${err.message}` })
       }
     })
   } else {
-    await callback(null, {message: 'No hay conexion'})
+    await callback(null, { message: 'No hay conexion' })
   }
 }
 

@@ -8,13 +8,14 @@ userModel.getUsers = async (callback) => {
   if (connection) {
     await connection.query('SELECT * FROM usuarios ORDER BY idUsuarios', async (err, rows) => {
       if (err) {
-        return callback(null, {message: `Ha ocorrido el siguiente error: ${err.message}`})
+        console.log(`Ha ocorrido el siguiente error: ${err.message}`)
+        callback(null, { error: `Ha ocorrido el siguiente error: ${err.message}` })
       } else {
         await callback(null, rows)
       }
     })
   } else {
-    await callback(null, {message: 'No hay conexion'})
+    await callback(null, { message: 'No hay conexion' })
   }
 }
 
@@ -22,13 +23,14 @@ userModel.getUser = async (id, callback) => {
   if (connection) {
     await connection.query(`SELECT * FROM usuarios WHERE usuario = ${connection.escape(id)}`, async (err, rows) => {
       if (err) {
-        return callback(null, {message: `Ha ocorrido el siguiente error: ${err.message}`})
+        console.log(`Ha ocorrido el siguiente error: ${err.message}`)
+        callback(null, { error: `Ha ocorrido el siguiente error: ${err.message}` })
       } else {
         await callback(null, rows)
       }
     })
   } else {
-    await callback(null, {message: 'No hay conexion'})
+    await callback(null, { message: 'No hay conexion' })
   }
 }
 
@@ -46,13 +48,14 @@ userModel.updateUser = async (userData, callback) => {
 
     await connection.query(sql, async (err, rows) => {
       if (err) {
-        return callback(null, {message: `Ha ocorrido el siguiente error: ${err.message}`})
+        console.log(`Ha ocorrido el siguiente error: ${err.message}`)
+        callback(null, { error: `Ha ocorrido el siguiente error: ${err.message}` })
       } else {
         await callback(null, rows)
       }
     })
   } else {
-    await callback(null, {message: 'No hay conexion'})
+    await callback(null, { message: 'No hay conexion' })
   }
 }
 
@@ -60,9 +63,10 @@ userModel.insertUser = async (userData, callback) => {
   if (connection) {
     await connection.query('INSERT INTO usuarios SET ?', userData, async (err, rows) => {
       if (err) {
-        return callback(null, {message: `Ha ocorrido el siguiente error: ${err.message}`})
+        console.log(`Ha ocorrido el siguiente error: ${err.message}`)
+        callback(null, { error: `Ha ocorrido el siguiente error: ${err.message}` })
       } else {
-        await callback(null, {message: 'Usuario agregado'})
+        await callback(null, { message: 'Usuario agregado' })
       }
     })
   }
@@ -76,13 +80,15 @@ userModel.deleteUser = async (usuario, callback) => {
         let sql = `DELETE FROM usuarios WHERE usuario = '${usuario}'`
         await connection.query(sql, async (err, req) => {
           if (err) {
-            return callback(null, {message: `Ha ocorrido el siguiente error: ${err.message}`})
+            console.log(`Ha ocorrido el siguiente error: ${err.message}`)
+            callback(null, { error: `Ha ocorrido el siguiente error: ${err.message}` })
           } else {
-            await callback(null, {message: 'Usuario borrado'})
+            await callback(null, { message: 'Usuario borrado' })
           }
         })
       } else if (err) {
-        await callback(null, {message: `Ha ocurrido un error en el seleccionado: ${err.message}`})
+        console.log(`Ha ocorrido el siguiente error: ${err.message}`)
+        callback(null, { error: `Ha ocorrido el siguiente error: ${err.message}` })
       }
     })
   }

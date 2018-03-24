@@ -78,7 +78,7 @@ statModel.updateStat = async (userData, callback) => {
         AND idAsignaturas = ${connection.escape(userData.idAsignaturas)}`
     await connection.query(sql, async (err, rows) => {
       if (err) {
-        console.log(`Ha ocorrido el siguiente error: ${err.message} || ${sql}`)
+        console.log(`Ha ocorrido el siguiente error: ${err.message}`)
         callback(null, {error: `Ha ocorrido el siguiente error: ${err.message} `})
       } else {
         await callback(null, rows)

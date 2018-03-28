@@ -74,7 +74,7 @@ userModel.insertUser = async (userData, callback) => {
 
 userModel.deleteUser = async (usuario, callback) => {
   if (connection) {
-    let sql = `SELECT * FROM usuarios WHERE usuario = '${connection.escape(usuario)}'`
+    let sql = `SELECT * FROM usuarios WHERE usuario = ${connection.escape(usuario)}`
     await connection.query(sql, async (err, row) => {
       if (row) {
         let sql = `DELETE FROM usuarios WHERE usuario = '${usuario}'`

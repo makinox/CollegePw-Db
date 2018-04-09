@@ -62,10 +62,10 @@ statModel.updateStat = async (userData, callback) => {
     let nt3 = ''
     if (userData.nota3 > 0) { nt3 = `nota3 = ${connection.escape(userData.nota3)}` }
 
-    if ((cpc !== '')) { cec = cec + ',' }
-    if ((cec === '') && (nt1 !== '')) { cpc = cpc + ',' }
-    if ((cpc === '') && (nt2 !== '')) { nt1 = nt1 + ',' }
-    if ((nt1 === '') && (nt3 !== '')) { nt2 = nt2 + ',' }
+    if ((cec !== '') && (cpc !== '')) { cec = cec + ',' }
+    if ((cpc !== '') && (nt1 !== '')) { cpc = cpc + ',' }
+    if ((nt1 !== '') && (nt2 !== '')) { nt1 = nt1 + ',' }
+    if ((nt2 !== '') && (nt3 !== '')) { nt2 = nt2 + ',' }
 
     let sql = `
         UPDATE calificaciones SET
@@ -78,7 +78,7 @@ statModel.updateStat = async (userData, callback) => {
         AND idAsignaturas = ${connection.escape(userData.idAsignaturas)}`
     await connection.query(sql, async (err, rows) => {
       if (err) {
-        console.log(`Ha ocorrido el siguiente error: ${err.message}`)
+        console.log(`Ha ocorrido el siguiente error: ${err.message} sql error ${sql}`)
         callback(null, {error: `Ha ocorrido el siguiente error: ${err.message} `})
       } else {
         await callback(null, rows)

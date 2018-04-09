@@ -36,14 +36,33 @@ userModel.getUser = async (id, callback) => {
 
 userModel.updateUser = async (userData, callback) => {
   if (connection) {
+    let nomb = ''
+    if (userData.nombres > 0) {nomb = `nombres = ${connection.escape(userData.nombres)}`}
+    let apel = ''
+    if (userData.apellidos > 0) {apel = `apellidos = ${connection.escape(userData.apellidos)}`}
+    let contr = ''
+    if (userData.contraseña > 0) { contr = `contraseña = ${connection.escape(userData.contraseña)}`}
+    let roll = ''
+    if (userData.rol > 0) { roll = `rol = ${connection.escape(userData.rol)}`}
+    let emai = ''
+    if (userData.email > 0) { emai = `email = ${connection.escape(userData.email)}`}
+    let docum = ''
+    if (userData.documento > 0) { docum = `documento = ${connection.escape(userData.documento)}`}
+
+    if ((nomb !== '') && (apel !== '')) { nomb = nomb + ',' }
+    if ((apel !== '') && (contr !== '')) { apel = apel + ',' }
+    if ((contr !== '') && (roll !== '')) { contr = contr + ',' }
+    if ((roll !== '') && (emai !== '')) { roll = roll + ',' }
+    if ((emai !== '') && (docum !== '')) { emai = emai + ',' }
+
     let sql = `
         UPDATE usuarios SET
-        nombres = ${connection.escape(userData.nombres)},
-        apellidos = ${connection.escape(userData.apellidos)},
-        contraseña = ${connection.escape(userData.contraseña)},
-        rol = ${connection.escape(userData.rol)},
-        email = ${connection.escape(userData.email)},
-        documento = ${connection.escape(userData.documento)}
+        ${nomb}
+        ${apel}
+        ${contr}
+        ${roll}
+        ${emai}
+        ${docum}
         WHERE usuario = ${connection.escape(userData.usuario)}`
 
     await connection.query(sql, async (err, rows) => {

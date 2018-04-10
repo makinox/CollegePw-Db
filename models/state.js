@@ -77,6 +77,7 @@ statModel.updateStat = async (userData, callback) => {
         WHERE usuario = ${connection.escape(userData.usuario)}
         AND idAsignaturas = ${connection.escape(userData.idAsignaturas)}`
     await connection.query(sql, async (err, rows) => {
+      await connection.query(`UPDATE calificaciones set notaFinal = ((nota1 + nota2 + nota3)/(3)) where usuario = ${connection.escape(userData.usuario)} and idAsignaturas = ${connection.escape(userData.idAsignaturas)}`)
       if (err) {
         console.log(`Ha ocorrido el siguiente error: ${err.message} sql error ${sql}`)
         callback(null, {error: `Ha ocorrido el siguiente error: ${err.message} `})

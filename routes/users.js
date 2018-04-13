@@ -29,6 +29,7 @@ module.exports = async function (app) {
     })
   })
 
+  // Da los usuarios que estan registrados en el curso
   await app.get('/guser/:grado', async (req, res) => {
     await User.getAFcurso(req.params.grado, async (err, data) => {
       if (data.error || err) {

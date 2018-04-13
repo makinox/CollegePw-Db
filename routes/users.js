@@ -29,6 +29,19 @@ module.exports = async function (app) {
     })
   })
 
+  await app.get('/guser/:grado', async (req, res) => {
+    await User.getAFcurso(req.params.grado, async (err, data) => {
+      if (data.error || err) {
+        res.jsonp({
+          success: false,
+          data
+        })
+      } else {
+        await res.jsonp(data)
+      }
+    })
+  })
+
   // Modificar un usuario
   await app.put('/users/:id', async (req, res) => {
     const userData = {

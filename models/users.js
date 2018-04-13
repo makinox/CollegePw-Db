@@ -34,20 +34,36 @@ userModel.getUser = async (id, callback) => {
   }
 }
 
+userModel.getAFcurso = async (grado, callback) => {
+  if (connection) {
+    let sql = `SELECT usuario FROM usuarios WHERE grado = ${connection.escape(grado)}`
+    await connection.query(sql, async (err, rows) => {
+      if (err) {
+        console.log(`Ha ocorrido el siguiente error: ${err.message} \nsql: ${sql}`)
+        callback(null, { error: `Ha ocorrido el siguiente error: ${err.message}` })
+      } else {
+        await callback(null, rows)
+      }
+    })
+  } else {
+    await callback(null, { message: 'No hay conexion' })
+  }
+}
+
 userModel.updateUser = async (userData, callback) => {
   if (connection) {
     let nomb = ''
-    if (userData.nombres > 0) {nomb = `nombres = ${connection.escape(userData.nombres)}`}
+    if (userData.nombres > 0) { nomb = `nombres = ${connection.escape(userData.nombres)}` }
     let apel = ''
-    if (userData.apellidos > 0) {apel = `apellidos = ${connection.escape(userData.apellidos)}`}
+    if (userData.apellidos > 0) { apel = `apellidos = ${connection.escape(userData.apellidos)}` }
     let contr = ''
-    if (userData.contraseña > 0) { contr = `contraseña = ${connection.escape(userData.contraseña)}`}
+    if (userData.contraseña > 0) { contr = `contraseña = ${connection.escape(userData.contraseña)}` }
     let roll = ''
-    if (userData.rol > 0) { roll = `rol = ${connection.escape(userData.rol)}`}
+    if (userData.rol > 0) { roll = `rol = ${connection.escape(userData.rol)}` }
     let emai = ''
-    if (userData.email > 0) { emai = `email = ${connection.escape(userData.email)}`}
+    if (userData.email > 0) { emai = `email = ${connection.escape(userData.email)}` }
     let docum = ''
-    if (userData.documento > 0) { docum = `documento = ${connection.escape(userData.documento)}`}
+    if (userData.documento > 0) { docum = `documento = ${connection.escape(userData.documento)}` }
 
     if ((nomb !== '') && (apel !== '')) { nomb = nomb + ',' }
     if ((apel !== '') && (contr !== '')) { apel = apel + ',' }

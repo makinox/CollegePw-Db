@@ -13,7 +13,7 @@ eveModel.average = async (user, callback) => {
       } else {
         await callback(null, rows)
       }
-    }) 
+    })
   } else {
     await callback(null, { message: 'No hay conexion' })
   }

@@ -53,17 +53,17 @@ userModel.getAFcurso = async (grado, callback) => {
 userModel.updateUser = async (userData, callback) => {
   if (connection) {
     let nomb = ''
-    if (userData.nombres > 0) { nomb = `nombres = ${connection.escape(userData.nombres)}` }
+    if (userData.nombres.length > 0) { nomb = `nombres = ${connection.escape(userData.nombres)}` }
     let apel = ''
-    if (userData.apellidos > 0) { apel = `apellidos = ${connection.escape(userData.apellidos)}` }
+    if (userData.apellidos.length > 0) { apel = `apellidos = ${connection.escape(userData.apellidos)}` }
     let contr = ''
-    if (userData.contraseña > 0) { contr = `contraseña = ${connection.escape(userData.contraseña)}` }
+    if (userData.contraseña.length > 0) { contr = `contraseña = ${connection.escape(userData.contraseña)}` }
     let roll = ''
-    if (userData.rol > 0) { roll = `rol = ${connection.escape(userData.rol)}` }
+    if (userData.rol.length > 0) { roll = `rol = ${connection.escape(userData.rol)}` }
     let emai = ''
-    if (userData.email > 0) { emai = `email = ${connection.escape(userData.email)}` }
+    if (userData.email.length > 0) { emai = `email = ${connection.escape(userData.email)}` }
     let docum = ''
-    if (userData.documento > 0) { docum = `documento = ${connection.escape(userData.documento)}` }
+    if (userData.documento.length > 0) { docum = `documento = ${connection.escape(userData.documento)}` }
 
     if ((nomb !== '') && (apel !== '')) { nomb = nomb + ',' }
     if ((apel !== '') && (contr !== '')) { apel = apel + ',' }
@@ -83,7 +83,7 @@ userModel.updateUser = async (userData, callback) => {
 
     await connection.query(sql, async (err, rows) => {
       if (err) {
-        console.log(`Ha ocorrido el siguiente error: ${err.message}`)
+        console.log(`Ha ocorrido el siguiente error: ${err.message} \nsql: ${sql} \nuserData: ${userData} \n contra: ${userData.contraseña} \n contr: ${contr}\n nomb: ${nomb} \nnombre: ${userData.nombres}`)
         callback(null, { error: `Ha ocorrido el siguiente error: ${err.message}` })
       } else {
         await callback(null, rows)

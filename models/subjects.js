@@ -64,6 +64,7 @@ subjectsModel.insertSubject = async (userData, callback) => {
         callback(null, { error: `Ha ocorrido el siguiente error: ${err.message}` })
       } else {
         await callback(null, { message: 'Asignatura insertada' })
+        // await connection.query(``)
       }
     })
   } else {

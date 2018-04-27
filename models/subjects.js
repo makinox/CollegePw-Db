@@ -48,7 +48,8 @@ subjectsModel.updateSubject = async (userData, callback) => {
         console.log(`Ha ocorrido el siguiente error: ${err.message}`)
         callback(null, { error: `Ha ocorrido el siguiente error: ${err.message}` })
       } else {
-        await callback(null, rows)
+        console.log(`Se registro con el id ${rows.idAsignaturas}`)
+        await callback(null, rows.idAsignaturas)
       }
     })
   } else {

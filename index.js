@@ -6,7 +6,7 @@ const morgan = require('morgan')
 const bodyParser = require('body-parser')
 
 // Configuraciones
-app.set('port', (process.env.PORT || 3001))
+app.set('port', (process.env.PORT || 3002))
 
 // Headers
 app.use(function (req, res, next) {

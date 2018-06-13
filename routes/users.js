@@ -15,9 +15,9 @@ module.exports = async function (app) {
     })
   })
 
-  // Obtener un solo usuario
-  await app.get('/users/:id', async (req, res) => {
-    await User.getUser(req.params.id, async (err, data) => {
+  // Obtiene un resultado con limite e indice
+  await app.get('/users/:limit&:offset', async (req, res) => {
+    await User.getUser(req.params.limit, req.params.offset, async (err, data) => {
       if (data.error || err) {
         res.jsonp({
           success: false,
@@ -28,83 +28,98 @@ module.exports = async function (app) {
       }
     })
   })
+
+
+  // Obtener un solo usuario
+  // await app.get('/users/:id', async (req, res) => {
+  //   await User.getUser(req.params.id, async (err, data) => {
+  //     if (data.error || err) {
+  //       res.jsonp({
+  //         success: false,
+  //         data
+  //       })
+  //     } else {
+  //       await res.jsonp(data)
+  //     }
+  //   })
+  // })
 
   // Da los usuarios que estan registrados en el curso
-  await app.get('/guser/:grado', async (req, res) => {
-    await User.getAFcurso(req.params.grado, async (err, data) => {
-      if (data.error || err) {
-        res.jsonp({
-          success: false,
-          data
-        })
-      } else {
-        await res.jsonp(data)
-      }
-    })
-  })
+  // await app.get('/guser/:grado', async (req, res) => {
+  //   await User.getAFcurso(req.params.grado, async (err, data) => {
+  //     if (data.error || err) {
+  //       res.jsonp({
+  //         success: false,
+  //         data
+  //       })
+  //     } else {
+  //       await res.jsonp(data)
+  //     }
+  //   })
+  // })
 
   // Modificar un usuario
-  await app.put('/users/:id', async (req, res) => {
-    const userData = {
-      nombres: req.body.nombres,
-      apellidos: req.body.apellidos,
-      contraseña: req.body.contraseña,
-      email: req.body.email,
-      rol: req.body.rol,
-      documento: req.body.documento,
-      usuario: req.params.id
-    }
-    await User.updateUser(userData, async (err, data) => {
-      if (data.error || err) {
-        res.jsonp({
-          success: false,
-          data
-        })
-      } else {
-        await res.jsonp({
-          success: true
-        })
-      }
-    })
-  })
+  // await app.put('/users/:id', async (req, res) => {
+  //   const userData = {
+  //     nombres: req.body.nombres,
+  //     apellidos: req.body.apellidos,
+  //     contraseña: req.body.contraseña,
+  //     email: req.body.email,
+  //     rol: req.body.rol,
+  //     documento: req.body.documento,
+  //     usuario: req.params.id
+  //   }
+  //   await User.updateUser(userData, async (err, data) => {
+  //     if (data.error || err) {
+  //       res.jsonp({
+  //         success: false,
+  //         data
+  //       })
+  //     } else {
+  //       await res.jsonp({
+  //         success: true
+  //       })
+  //     }
+  //   })
+  // })
   // Insertando usuario
-  await app.post('/users', async (req, res) => {
-    const userData = {
-      nombres: req.body.nombres,
-      apellidos: req.body.apellidos,
-      contraseña: req.body.contraseña,
-      email: req.body.email,
-      rol: req.body.rol,
-      documento: req.body.documento,
-      usuario: req.body.usuario
-    }
-    await User.insertUser(userData, async (err, data) => {
-      if (data.error || err) {
-        res.jsonp({
-          success: false,
-          data
-        })
-      } else {
-        await res.jsonp({
-          success: true
-        })
-      }
-    })
-  })
+  // await app.post('/users', async (req, res) => {
+  //   const userData = {
+  //     nombres: req.body.nombres,
+  //     apellidos: req.body.apellidos,
+  //     contraseña: req.body.contraseña,
+  //     email: req.body.email,
+  //     rol: req.body.rol,
+  //     documento: req.body.documento,
+  //     usuario: req.body.usuario
+  //   }
+  //   await User.insertUser(userData, async (err, data) => {
+  //     if (data.error || err) {
+  //       res.jsonp({
+  //         success: false,
+  //         data
+  //       })
+  //     } else {
+  //       await res.jsonp({
+  //         success: true
+  //       })
+  //     }
+  //   })
+  // })
 
   // Borrar usuarios
-  await app.delete('/users/:id', async (req, res) => {
-    await User.deleteUser(req.params.id, async (err, data) => {
-      if (data.error || err) {
-        res.jsonp({
-          success: false,
-          data
-        })
-      } else {
-        res.jsonp({
-          success: true
-        })
-      }
-    })
-  })
+  // await app.delete('/users/:id', async (req, res) => {
+  //   await User.deleteUser(req.params.id, async (err, data) => {
+  //     if (data.error || err) {
+  //       res.jsonp({
+  //         success: false,
+  //         data
+  //       })
+  //     } else {
+  //       res.jsonp({
+  //         success: true
+  //       })
+  //     }
+  //   })
+  // })
 }

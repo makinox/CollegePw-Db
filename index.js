@@ -27,10 +27,10 @@ app.use(bodyParser.urlencoded({type: 'application/x-www-form-urlencoded', extend
 require('./routes/index')(app)
 require('./routes/auth')(app)
 require('./routes/users')(app)
-require('./routes/subjects')(app)
-require('./routes/state')(app)
-require('./routes/enty')(app)
-require('./routes/eve')(app)
+// require('./routes/subjects')(app)
+// require('./routes/state')(app)
+// require('./routes/enty')(app)
+// require('./routes/eve')(app)
 
 // Conección
 app.listen(app.get('port'), () => { console.log('Utopia-db corriendo en el puerto ', app.get('port')) })

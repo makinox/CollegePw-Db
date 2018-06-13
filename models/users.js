@@ -66,7 +66,7 @@ userModel.getUsersNameDESC = async (limit, offset, callback) => {
 
 userModel.getUsersSEARCH = async (limit, offset, index, callback) => {
   if (connection) {
-    await connection.query(`SELECT * FROM usuarios where nombres like '%${index}%' LIMIT ${limit} OFFSET ${offset} `, async (err, rows) => {
+    await connection.query(`SELECT * FROM usuarios where nombres like '%${index}%' LIMIT ${limit} OFFSET ${offset}`, async (err, rows) => {
       if (err) {
         console.log(`Ha ocorrido el siguiente error: ${err.message}`)
         callback(null, { error: `Ha ocorrido el siguiente error: ${err.message}` })

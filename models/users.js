@@ -34,6 +34,51 @@ userModel.getUser = async (limit, offset, callback) => {
   }
 }
 
+userModel.getUsersNameASC = async (limit, offset, callback) => {
+  if (connection) {
+    await connection.query(`SELECT * FROM usuarios ORDER BY nombres ASC LIMIT ${limit} OFFSET ${offset} `, async (err, rows) => {
+      if (err) {
+        console.log(`Ha ocorrido el siguiente error: ${err.message}`)
+        callback(null, { error: `Ha ocorrido el siguiente error: ${err.message}` })
+      } else {
+        await callback(null, rows)
+      }
+    })
+  } else {
+    await callback(null, { message: 'No hay conexion' })
+  }
+}
+
+userModel.getUsersNameDESC = async (limit, offset, callback) => {
+  if (connection) {
+    await connection.query(`SELECT * FROM usuarios ORDER BY nombres DESC LIMIT ${limit} OFFSET ${offset} `, async (err, rows) => {
+      if (err) {
+        console.log(`Ha ocorrido el siguiente error: ${err.message}`)
+        callback(null, { error: `Ha ocorrido el siguiente error: ${err.message}` })
+      } else {
+        await callback(null, rows)
+      }
+    })
+  } else {
+    await callback(null, { message: 'No hay conexion' })
+  }
+}
+
+userModel.getUsersSEARCH = async (limit, offset, index, callback) => {
+  if (connection) {
+    await connection.query(`SELECT * FROM usuarios where nombres like '%${index}%' LIMIT ${limit} OFFSET ${offset} `, async (err, rows) => {
+      if (err) {
+        console.log(`Ha ocorrido el siguiente error: ${err.message}`)
+        callback(null, { error: `Ha ocorrido el siguiente error: ${err.message}` })
+      } else {
+        await callback(null, rows)
+      }
+    })
+  } else {
+    await callback(null, { message: 'No hay conexion' })
+  }
+}
+
 // userModel.getAFcurso = async (grado, callback) => {
 //   if (connection) {
 //     let sql = `SELECT usuario FROM usuarios WHERE grado = ${connection.escape(grado)}`

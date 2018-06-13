@@ -16,7 +16,7 @@ module.exports = async function (app) {
   })
 
   // Obtiene un resultado con limite e indice
-  await app.get('/users/:limit&:offset', async (req, res) => {
+  await app.get('/users/limit=:limit&offset=:offset', async (req, res) => {
     await User.getUser(req.params.limit, req.params.offset, async (err, data) => {
       if (data.error || err) {
         res.jsonp({
@@ -29,6 +29,47 @@ module.exports = async function (app) {
     })
   })
 
+  // Obtiene los resultados en orden ascendente
+  await app.get('/usersNASC/limit=:limit&offset=:offset', async (req, res) => {
+    await User.getUsersNameASC(req.params.limit, req.params.offset, async (err, data) => {
+      if (data.error || err) {
+        res.jsonp({
+          success: false,
+          data
+        })
+      } else {
+        await res.jsonp(data)
+      }
+    })
+  })
+
+  // Obtiene los resultados en orden descendente
+  await app.get('/usersNDESC/limit=:limit&offset=:offset', async (req, res) => {
+    await User.getUsersNameDESC(req.params.limit, req.params.offset, async (err, data) => {
+      if (data.error || err) {
+        res.jsonp({
+          success: false,
+          data
+        })
+      } else {
+        await res.jsonp(data)
+      }
+    })
+  })
+
+  // Obtiene los resultados de la busqueda
+  await app.get('/usersSEARCH/limit=:limit&offset=:offset&search=:index', async (req, res) => {
+    await User.getUsersSEARCH(req.params.limit, req.params.offset, req.params.index, async (err, data) => {
+      if (data.error || err) {
+        res.jsonp({
+          success: false,
+          data
+        })
+      } else {
+        await res.jsonp(data)
+      }
+    })
+  })
 
   // Obtener un solo usuario
   // await app.get('/users/:id', async (req, res) => {

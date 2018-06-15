@@ -36,7 +36,7 @@ userModel.getUser = async (limit, offset, callback) => {
 
 userModel.getUsersNameASC = async (limit, offset, callback) => {
   if (connection) {
-    await connection.query(`SELECT * FROM usuarios ORDER BY nombres ASC LIMIT ${limit} OFFSET ${offset} `, async (err, rows) => {
+    await connection.query(`SELECT * FROM usuarios ORDER BY idUsuarios ASC LIMIT ${limit} OFFSET ${offset} `, async (err, rows) => {
       if (err) {
         console.log(`Ha ocorrido el siguiente error: ${err.message}`)
         callback(null, { error: `Ha ocorrido el siguiente error: ${err.message}` })
@@ -51,7 +51,7 @@ userModel.getUsersNameASC = async (limit, offset, callback) => {
 
 userModel.getUsersNameDESC = async (limit, offset, callback) => {
   if (connection) {
-    await connection.query(`SELECT * FROM usuarios ORDER BY nombres DESC LIMIT ${limit} OFFSET ${offset} `, async (err, rows) => {
+    await connection.query(`SELECT * FROM usuarios ORDER BY idUsuarios DESC LIMIT ${limit} OFFSET ${offset} `, async (err, rows) => {
       if (err) {
         console.log(`Ha ocorrido el siguiente error: ${err.message}`)
         callback(null, { error: `Ha ocorrido el siguiente error: ${err.message}` })
@@ -76,6 +76,21 @@ userModel.getUsersSEARCH = async (limit, offset, index, callback) => {
     })
   } else {
     await callback(null, { message: 'No hay conexion' })
+  }
+}
+
+userModel.forme = async (userData, callback) => {
+  if (connection) {
+    for (let index = 0; index < 70000; index++) {
+      await connection.query(`INSERT INTO usuarios SET nombres = 'hola', apellidos = 'unknown', contraseña = '123', email = 'gmail.com', rol = 'estudiante', documento = 'hf6t76', grado = '10-a'`, userData, async (err, rows) => {
+        if (err) {
+          console.log(`Ha ocorrido el siguiente error: ${err.message}`)
+          callback(null, { error: `Ha ocorrido el siguiente error: ${err.message}` })
+        } else {
+          await callback(null, { message: 'Usuario agregado' })
+        }
+      })
+    }
   }
 }
 

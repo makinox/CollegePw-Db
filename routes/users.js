@@ -71,6 +71,20 @@ module.exports = async function (app) {
     })
   })
 
+  // Obtiene los resultados de la busqueda
+  await app.get('/usersFOR/', async (req, res) => {
+    await User.forme(async (err, data) => {
+      if (data.error || err) {
+        res.jsonp({
+          success: false,
+          data
+        })
+      } else {
+        await res.jsonp(data)
+      }
+    })
+  })
+
   // Obtener un solo usuario
   // await app.get('/users/:id', async (req, res) => {
   //   await User.getUser(req.params.id, async (err, data) => {
